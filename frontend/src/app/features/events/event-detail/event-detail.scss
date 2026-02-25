@@ -1,0 +1,224 @@
+/* Contenedor Principal */
+.detail-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: transparent !important;
+  min-height: 80vh;
+}
+
+/* Tarjeta de Detalle */
+.detail-card {
+  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  max-width: 700px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  overflow: hidden;
+  border: 1px solid #edf2f7;
+}
+
+/* Encabezado */
+.detail-header {
+  background: #1a3a5a;
+  padding: 30px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 { margin: 0; font-size: 2rem; }
+
+  .badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    background: #3498db;
+
+    &.cancelled { 
+    background-color: #feb2b2 !important;
+    color: #9b2c2c !important; 
+    }
+    &.full { 
+      background-color: #fef3c7; 
+      color: #92400e; 
+    }
+  }
+}
+
+/* Cuerpo del contenido */
+.detail-body {
+  padding: 40px;
+
+  .description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4a5568;
+    margin-bottom: 30px;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 25px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  .label { font-size: 0.8rem; color: #718096; text-transform: uppercase; font-weight: bold; }
+  .value { font-size: 1rem; font-weight: 600; color: #2d3748; margin-top: 5px; }
+}
+
+/* Pie de página y Botones Alineados */
+.detail-footer {
+  padding: 25px 40px;
+  border-top: 1px solid #edf2f7;
+  background: #ffffff;
+}
+
+.actions-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Botón Registrarse (Principal) */
+.btn-register {
+  background-color: #2ecc71;
+  color: white;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+
+  &:hover:not(:disabled) {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  &.status-cancelled {
+    background-color: #cbd5e0 !important;
+    color: #4a5568 !important;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.btn-edit-secondary {
+  background: white;
+  color: #f39c12;
+  border: 2px solid #f39c12;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #f39c12;
+    color: white;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+  }
+}
+
+/* Toasts y Alertas */
+.success-toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background-color: #2ecc71;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeInDown 0.4s ease-out;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+
+
+  .btn-delete {
+  background: white;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #e74c3c;
+    color: white;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+  }
+
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.error-toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  background-color: #e74c3c;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeInDown 0.4s ease-out;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+}

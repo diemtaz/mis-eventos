@@ -1,0 +1,84 @@
+@if (store.loading()) {
+  <div class="loading-overlay">
+    <p>Cargando detalles...</p>
+  </div>
+}
+
+@if (store.selectedEvent(); as event) {
+  @if (showDeleteModal()) {
+    <app-confirm-modal 
+      title="Eliminar Evento"
+      message="¿Estás seguro de que quieres borrar este evento?"
+      (confirmed)="confirmDelete($event, event.id)"
+    />
+  }
+  <div class="detail-wrapper" style="position: relative;">
+    
+    @if (store.successMessage()) {
+      <div class="success-toast">
+        <span class="icon">🎉</span>
+        {{ store.successMessage() }}
+      </div>
+    }
+
+    @if (store.error()) {
+      <div class="error-toast">
+        <span class="icon">❌</span>
+        {{ store.error() }}
+      </div>
+    }
+
+    <article class="detail-card">
+      <div class="back-navigation">
+        <button (click)="goBack()" class="btn-back">
+          <span class="icon">←</span> Volver al listado
+        </button>
+      </div>
+      <header class="detail-header">
+          <h1>{{ event.name }}</h1>
+          <span class="badge" [class]="event.status.toLowerCase()">
+            {{ getStatusLabel(event.status) }}
+          </span>
+        </header>
+
+      <section class="detail-body">
+        <p class="description">{{ event.description }}</p>
+        <div class="speaker-info">
+          <span class="label">Ponente Principal: </span>
+          <span class="speaker-name">{{ event.speaker_name || 'Por confirmar' }}</span>
+        </div>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">📅 Fecha y Hora</span>
+            <span class="value">{{ event.start_date | date:'medium' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">👥 Capacidad</span>
+            <span class="value">{{ event.capacity }} asistentes</span>
+          </div>
+        </div>
+      </section>
+
+      <footer class="detail-footer">
+        <div class="actions-group">
+          @if (store.isAlreadyRegistered()) {
+            <div class="already-registered-msg">✅ Ya estás registrado</div>
+          } 
+          @else {
+            <button class="btn-register" 
+                    [disabled]="isRegisterDisabled(event)"
+                    (click)="onRegister()">
+              Registrarse
+            </button>
+          }
+
+          @if (canEdit()) {
+            <button class="btn-edit-secondary" (click)="onEdit(event.id)">✏️ Editar</button>
+            <button class="btn-delete" (click)="onDelete()">🗑️ Eliminar</button>
+          }
+        </div>
+      </footer>
+    </article>
+  </div>
+}

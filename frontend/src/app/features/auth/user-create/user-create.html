@@ -1,0 +1,30 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Registro de Staff</h2>
+    <p>Crea cuentas para Administradores u Organizadores</p>
+
+    <form (submit)="onRegister()">
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input id="email" type="email" [(ngModel)]="email" name="email" required placeholder="staff@dominio.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña Temporal</label>
+        <input id="password" type="password" [(ngModel)]="password" name="password" required placeholder="••••••••">
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rol del Usuario</label>
+        <select id="role" [(ngModel)]="role" name="role" class="form-control">
+          <option value="ORGANIZER">Organizador</option>
+          <option value="ADMIN">Administrador</option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Procesando...' : 'Crear Usuario' }}
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+ @if (auth.isLoggedIn()) { <nav class="navbar">
+  <div class="nav-brand">
+    <h1>Mis Eventos</h1>
+  </div>
+
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/events" routerLinkActive="active">Lista de Eventos</a>
+    </li>
+
+    @if (auth.role() === 'admin' || auth.role() === 'organizer') {
+    <li>
+      <a routerLink="/events/create" routerLinkActive="active">Crear Evento</a>
+    </li>
+    }
+
+    <li>
+      <a routerLink="/profile" routerLinkActive="active">Mi Perfil</a>
+    </li>
+
+    @if (auth.role() === 'admin'){
+       <li>
+        <a routerLink="/auth/create-user" routerLinkActive="active">Registrar Staff</a>
+      </li>
+    }
+
+    <li>
+      <button class="btn-logout" (click)="logout()">
+        Cerrar Sesión
+      </button>
+    </li>
+  </ul>
+</nav>
+}
+
+<main>
+  <router-outlet></router-outlet>
+</main>

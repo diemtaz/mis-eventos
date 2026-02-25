@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.models import user, event, event_registration, session
+from app.models import user, event, event_registration
 from sqlmodel import SQLModel
 
 

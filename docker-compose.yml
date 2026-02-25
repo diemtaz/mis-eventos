@@ -30,6 +30,13 @@ services:
     container_name: mis_eventos_redis
     ports:
       - "6379:6379"
+  frontend:
+    build: ./frontend
+    container_name: mis_eventos_frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

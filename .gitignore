@@ -20,3 +20,6 @@ venv/
 
 # Docker
 .docker/
+
+node_modules
+dist

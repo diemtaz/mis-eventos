@@ -1,10 +1,11 @@
 import threading
-from datetime import datetime  # <--- Importar esto
+from datetime import datetime
 from sqlmodel import Session, select
 from app.models.event import Event
 from app.models.user import User
 from app.models.event_registration import EventRegistration
 from app.services.registration_service import RegistrationService
+from sqlmodel import SQLModel
 
 from test.conftest import test_engine as engine 
 
@@ -19,11 +20,8 @@ def register(event_id, user_id):
 
 def test_capacity_not_exceeded():
 
-    with Session(engine) as session:
-        session.execute(EventRegistration.__table__.delete())
-        session.execute(Event.__table__.delete())
-        session.execute(User.__table__.delete())
-        session.commit()
+    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.create_all(engine)
 
 
     with Session(engine) as session:

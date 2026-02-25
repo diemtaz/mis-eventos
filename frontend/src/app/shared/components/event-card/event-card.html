@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-content">
+    <div class="card-header">
+      <h3>{{ event().name }}</h3>
+      <span class="status-badge" [class]="event().status.toLowerCase()">
+         @if (event().status.toLowerCase() === 'cancelled') { Evento Cancelado }
+         @else if (event().status.toLowerCase() === 'full') { Evento Completo }
+         @else { Evento Activo }
+      </span>
+    </div>
+
+    <p class="description">{{ event().description }}</p>
+
+    <div class="speaker-tag">
+      <span class="name">{{ event().speaker_name || 'Ponente por confirmar' }}</span>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="event-info">
+      <span class="capacity">👥 {{ event().capacity }} cupos</span>
+    </div>
+    <button class="btn-detail" [routerLink]="['/events', event().id]">
+      Ver detalle
+    </button>
+  </div>
+</div>

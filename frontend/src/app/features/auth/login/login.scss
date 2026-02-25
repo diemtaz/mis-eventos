@@ -1,0 +1,107 @@
+:host {
+  display: block;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-weight: 500;
+  padding: 0.5rem;
+  background-color: #fdeaea;
+  border-radius: 4px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.login-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+
+  h2 { color: #1a3a5a; margin-bottom: 0.5rem; }
+  p { color: #7f8c8d; margin-bottom: 2rem; }
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  
+  label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #34495e; }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    
+    &:focus { outline: none; border-color: #3498db; }
+  }
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #1a3a5a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover { background: #34495e; }
+  &:disabled { background: #bdc3c7; cursor: not-allowed; }
+}
+
+.switch-auth {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+/* Estilo específico para el select dentro de los formularios */
+.form-group select.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdde1;
+  border-radius: 6px;
+  background-color: #f1f4f8; /* Un tono sutil para diferenciarlo */
+  font-size: 1rem;
+  color: #2c3e50;
+  cursor: pointer;
+  appearance: none; /* Limpia el estilo por defecto del navegador */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+
+  &:hover {
+    border-color: #b2bec3;
+  }
+}

@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Mis Eventos Registrados</h1>
+
+  @if (store.loading()) {
+    <p>Cargando tus registros...</p>
+  }
+
+  <div class="grid">
+    @for (event of store.myEvents(); track event.id) {
+      <app-event-card [event]="event"></app-event-card>
+    } @empty {
+      <div class="empty-state">
+        <p>Aún no estás registrado en ningún evento.</p>
+        <button routerLink="/events">Ver eventos disponibles</button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,57 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  z-index: 1000;
+  animation: slideIn 0.5s ease-out;
+
+  &.success { background-color: #2ecc71; box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  
+  background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), 
+                    url('../src/assets/fondo.png');
+  background-size: cover;      
+  background-position: center; 
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+  background: transparent !important;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #1a3a5a;
+  }
+
+  .icon {
+    font-size: 1.2rem;
+  }
+}

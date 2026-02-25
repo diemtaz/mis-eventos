@@ -17,7 +17,7 @@ Backend del sistema de gestión de eventos **Mis Eventos**, desarrollado con:
 El sistema permite:
 
 - Gestión de eventos  
-- Programación de sesiones  
+- Programación de eventos  
 - Registro de asistentes  
 - Autenticación y roles  
 - Validaciones de negocio  
@@ -138,8 +138,6 @@ Register → Login → Obtener Token → Acceder rutas protegidas
 | Events | DELETE | /events/{event_id} | Eliminar evento (soft delete) |
 | Events | POST | /events/{event_id}/publish | Publicar evento |
 | Events | POST | /events/{event_id}/cancel | Cancelar evento |
-| Sessions | POST | /sessions | Crear sesión de evento |
-| Sessions | PUT | /sessions/{session_id} | Actualizar sesión |
 | Registration | POST | /events/{event_id}/register | Registrar asistente al evento |
 | Registration | GET | /events/me/registrations | Eventos registrados del usuario |
 
@@ -148,7 +146,7 @@ Register → Login → Obtener Token → Acceder rutas protegidas
 
 Cache de eventos con Redis para mejorar performance
 
-Control de capacidad para eventos y sesiones
+Control de capacidad para eventos 
 
 Validación de conflictos de horario
 
@@ -214,7 +212,7 @@ El cache se invalida automáticamente cuando se modifican eventos.
 Se utilizó bloqueo de filas a nivel de base de datos para evitar:
 
 - Sobre-registro de asistentes.
-- Conflictos en programación de sesiones.
+- Conflictos en programación de eventos.
 
 Se aplicó `SELECT FOR UPDATE` en transacciones críticas.
 

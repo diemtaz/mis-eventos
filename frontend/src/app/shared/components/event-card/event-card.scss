@@ -1,0 +1,67 @@
+ .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid #eee;
+      overflow: hidden;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+      }
+    }
+
+    .card-content {
+      padding: 1.5rem;
+      flex-grow: 1;
+
+      h3 { margin: 0 0 0.5rem 0; color: #1a3a5a; font-size: 1.25rem; }
+      p { color: #7f8c8d; font-size: 0.9rem; line-height: 1.4; }
+    }
+
+    .card-footer {
+      padding: 1rem 1.5rem;
+      background: #f8f9fa;
+      border-top: 1px solid #eee;
+    }
+
+    .btn-detail {
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+
+      &:hover { background-color: #2980b9; }
+    }
+    .status-badge {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.published, &.active {
+      background-color: #def7ec;
+      color: #03543f;
+    }
+
+    &.cancelled {
+      background-color: #fde8e8;
+      color: #9b1c1c;
+    }
+
+    &.full {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+  }

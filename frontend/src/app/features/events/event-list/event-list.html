@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>Eventos Disponibles</h1>
+  <div class="search-container">
+    <input 
+      type="text" 
+      #searchInput
+      (keyup.enter)="store.loadEvents(1, searchInput.value)"
+      placeholder="Buscar eventos por nombre..."
+      class="search-input"
+    />
+    <button (click)="store.loadEvents(1, searchInput.value)" class="btn-search">
+      Buscar
+    </button>
+  </div>
+  
+  <div class="grid">
+    @if (store.loading()) {
+      <p>Cargando eventos...</p>
+    }
+
+    @for (event of store.events(); track event.id) {
+       <app-event-card [event]="event"></app-event-card>
+    } @empty {
+      @if (!store.loading()) {
+        <p>No hay eventos disponibles</p>
+      }
+    }
+  </div>
+
+  <div class="pagination-wrapper">
+    <button 
+      (click)="store.loadEvents(store.currentPage() - 1)"
+      [disabled]="store.currentPage() === 1 || store.loading()"
+      class="btn-nav">
+      &larr; Anterior
+    </button>
+
+    <div class="page-counter">
+      Página <strong>{{ store.currentPage() }}</strong> de {{ Math.ceil(store.totalEvents() / store.pageSize()) }}
+    </div>
+
+    <button 
+      (click)="store.loadEvents(store.currentPage() + 1)"
+      [disabled]="(store.currentPage() * store.pageSize() >= store.totalEvents()) || store.loading()"
+      class="btn-nav">
+      Siguiente &rarr;
+    </button>
+  </div>
+</div>
