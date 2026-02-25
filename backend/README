@@ -1,0 +1,265 @@
+# Mis Eventos Backend
+
+## Descripción
+
+Backend del sistema de gestión de eventos **Mis Eventos**, desarrollado con:
+
+- Python 3.12  
+- FastAPI  
+- PostgreSQL  
+- SQLModel / SQLAlchemy  
+- Redis (caching)  
+- JWT Authentication  
+- Poetry  
+- Alembic  
+- Pytest para testing  
+
+El sistema permite:
+
+- Gestión de eventos  
+- Programación de sesiones  
+- Registro de asistentes  
+- Autenticación y roles  
+- Validaciones de negocio  
+- Control de concurrencia  
+- Búsqueda avanzada  
+
+---
+
+## Arquitectura
+
+El proyecto sigue una arquitectura en capas:
+
+```text
+app/
+├── api/
+│ └── routes/ # Endpoints HTTP
+├── services/ # Lógica de negocio
+├── models/ # Definición de entidades
+├── schemas/ # Validación de requests/responses
+├── db/ # Configuración base de datos
+├── core/ # Configuración transversal (security, cache)
+└── main.py # Punto de entrada de la aplicación
+```
+
+## Principios aplicados:
+
+- Separación de responsabilidades  
+- Service Layer para lógica de dominio  
+- JWT para seguridad  
+- Redis para caching  
+- Soft delete para eliminación lógica  
+- Control de concurrencia en registros  
+
+---
+
+## Variables de entorno
+
+Crear un archivo `.env` en la raíz del backend:
+
+```env
+DATABASE_URL=postgresql://user:password@db:5432/miseventos
+SECRET_KEY=your_secret_key
+REDIS_HOST=redis
+REDIS_PORT=6379
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+```
+
+## Cómo correr el proyecto
+Usando Docker (recomendado)
+
+Asegúrate de tener Docker y Docker Compose instalados.
+
+Ejecutar:
+```bash
+docker compose up --build
+```
+
+El backend estará disponible en:
+```bash
+http://localhost:8000
+```
+
+Swagger UI:
+```bash
+http://localhost:8000/docs
+```
+
+## Migraciones de Base de Datos
+
+Ejecutar migraciones para inicializar la base de datos
+```bash
+docker compose exec backend alembic upgrade head
+```
+
+## Cómo ejecutar tests
+Dentro del contenedor Docker:
+docker compose exec backend pytest
+Ejecutar tests con coverage:
+
+```bash
+docker compose exec backend pytest --cov=app --cov-report=term-missing
+```
+## Reporte de cobertura
+
+Generar reporte HTML:
+```bash
+docker compose exec backend pytest --cov=app --cov-report=html
+```
+
+El reporte estará en:
+
+```env
+htmlcov/index.html
+```
+## Autenticación
+
+El sistema usa:
+
+JWT Bearer Token Authentication
+
+Flujo:
+
+```text
+Register → Login → Obtener Token → Acceder rutas protegidas
+```
+
+## Endpoints principales
+
+
+| Módulo | Método | Endpoint | Descripción |
+|---|---|---|---|
+| Auth | POST | /auth/register | Registro de usuarios |
+| Auth | POST | /auth/login | Inicio de sesión y generación de JWT |
+| Events | POST | /events | Crear evento (requiere rol organizer) |
+| Events | GET | /events | Listar eventos con paginación y búsqueda |
+| Events | GET | /events/{event_id} | Obtener detalle de un evento |
+| Events | PUT | /events/{event_id} | Actualizar evento |
+| Events | DELETE | /events/{event_id} | Eliminar evento (soft delete) |
+| Events | POST | /events/{event_id}/publish | Publicar evento |
+| Events | POST | /events/{event_id}/cancel | Cancelar evento |
+| Sessions | POST | /sessions | Crear sesión de evento |
+| Sessions | PUT | /sessions/{session_id} | Actualizar sesión |
+| Registration | POST | /events/{event_id}/register | Registrar asistente al evento |
+| Registration | GET | /events/me/registrations | Eventos registrados del usuario |
+
+
+## Decisiones Técnicas
+
+Cache de eventos con Redis para mejorar performance
+
+Control de capacidad para eventos y sesiones
+
+Validación de conflictos de horario
+
+Soft delete en eventos
+
+Separación Router → Service → Persistence
+
+Tests unitarios con pytest
+
+## Decisiones de Diseño
+
+Concurrencia Robusta: Se implementó SELECT FOR UPDATE en el proceso de registro para evitar condiciones de carrera (Race Conditions) y garantizar que nunca se exceda la capacidad del evento.
+
+Testing Aislado: La suite de pruebas utiliza una base de datos SQLite independiente, garantizando que el entorno de desarrollo permanezca limpio.
+
+## Decisiones de arquitectura
+
+### Arquitectura en capas
+
+El sistema fue diseñado usando una arquitectura en capas:
+
+- Router Layer: Manejo de endpoints HTTP y dependencias.
+- Service Layer: Contiene la lógica de negocio y validaciones.
+- Persistence Layer: Manejo de datos mediante SQLModel/PostgreSQL.
+
+Esta separación facilita el mantenimiento, testing y evolución del sistema.
+
+---
+
+### Control de dominio mediante servicios
+
+Las reglas de negocio no se implementan directamente en los routers ni en los modelos.
+
+Se centralizaron en la capa de servicios para:
+
+- Reducir duplicación de lógica.
+- Facilitar pruebas unitarias.
+- Mejorar la cohesión del dominio.
+
+---
+
+### Seguridad
+
+- Autenticación mediante JWT Bearer Token.
+- Protección de rutas para usuarios con permisos específicos.
+- Roles para control de acceso (organizador, administrador y asistente).
+
+---
+
+### Cache con Redis
+
+Se implementó caching para el listado de eventos con el objetivo de:
+
+- Reducir consultas directas a la base de datos.
+- Mejorar el tiempo de respuesta en endpoints de lectura.
+
+El cache se invalida automáticamente cuando se modifican eventos.
+
+---
+
+### Control de concurrencia
+
+Se utilizó bloqueo de filas a nivel de base de datos para evitar:
+
+- Sobre-registro de asistentes.
+- Conflictos en programación de sesiones.
+
+Se aplicó `SELECT FOR UPDATE` en transacciones críticas.
+
+---
+
+### Soft Delete
+
+Los eventos no se eliminan físicamente de la base de datos.
+
+Se utiliza un flag de eliminación lógica para:
+
+- Mantener integridad histórica.
+- Facilitar auditoría futura.
+
+---
+
+### Testing
+
+Se implementaron pruebas unitarias con pytest cubriendo:
+
+- Autenticación.
+- Creación de eventos.
+- Registro de asistentes.
+- Concurrencia en registros.
+
+Se recomienda ejecutar los tests dentro del contenedor Docker.
+
+---
+
+### Escalabilidad
+
+El sistema puede escalar horizontalmente debido a:
+
+- Uso de stateless authentication.
+- Cache distribuible.
+- Separación de responsabilidades.
+
+## Consideraciones
+
+No usar directamente la base de datos fuera de los servicios
+
+Mantener lógica de negocio dentro de la capa service
+
+Ejecutar migraciones antes de levantar el sistema
+
+## Autor
+
+Proyecto desarrollado como prueba técnica de liderazgo técnico por Diego Fernando Marin Marin.

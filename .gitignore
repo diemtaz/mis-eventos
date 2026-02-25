@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+# Archivos de cobertura
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+nosetests.xml
+
+# Databases
+test.db
+*.sqlite3
+
+# Environment
+.env
+venv/
+.venv/
+
+# Docker
+.docker/
